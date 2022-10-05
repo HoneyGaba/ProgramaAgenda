@@ -17,17 +17,32 @@ def lerArquivo():
         print('Algo de errado na leitura...')
 
 
+def mensagemErro(msg):
+    from Interface.Interface import cor
+    cor('vermelho')
+    print(msg)
+    cor('padrao')                
+                
+
+
 def conferePadrao(frase, intervalo):
     while True:
         dado = input(frase)
-        if dado in intervalo and dado != '':
+        if dado in intervalo and dado != '' and len(dado) == 1:
             return dado
         else:    
-            from Interface.Interface import cor
+            mensagemErro('Informação errada\nTente novamente!')
 
-            cor('vermelho')
-            print('Informação incorreta, tente novamente...')
-            cor('padrao')
+
+def confereNumero(frase):
+    while True:
+        try:
+            dado = int(input(frase))
+        except:
+            mensagemErro('Dado passado não é um número \nTente novamente!')
+        else:
+            dado = str(dado)
+            return dado
 
 
 def novoContato():
@@ -36,10 +51,10 @@ def novoContato():
     infoContato = ['nome', 'idade', 'sexo']
     for i in infoContato:
         if i == 'idade':
-            var = conferePadrao(f'Digite {i} do contato: ', '1234567890')
+            var = confereNumero(f'Digite {i} do contato: ')
         elif i == 'sexo':
-            var = conferePadrao(f'Digite o sexo [M] Masculino [F] Feminino\n{i}: ',
-             'mf').upper()
+            var = conferePadrao(f'Digite o sexo\n[M] Masculino [F] Feminino\n{i}: ',
+             'mfMF').upper()
         else:
             var = input(f'Digite {i} do contato: ')
             var = var.replace(';', '')
